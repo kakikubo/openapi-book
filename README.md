@@ -13,7 +13,7 @@ openapiのサンプル集とOpenAPI関連の情報を掲載します。
 ### Swagger Editor の起動方法
 
 * ここから最新版を確認できます
-  * https://github.com/swagger-api/swagger-editor/releases
+  * <https://github.com/swagger-api/swagger-editor/releases>
 
 簡単なのは Docker経由での起動
 
@@ -27,7 +27,7 @@ Makefileに記載してあるので、以下で起動可能
 make swagger
 ```
 
-http://openpi.lvh.me
+<http://openpi.lvh.me>
 ここでSwagger Editorを使える。
 
 ## [Swagger Viewer](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
@@ -36,15 +36,17 @@ VS Code で上記をインストールしておく。
 
 ### サンプルの配置
 
-https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml
+<https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml>
 上記からダウンロードして `openapi.yaml` として配置する。
 VS Codeで開いたら、`Shift + Alt + P` で `Swagger Viewer`を起動する事ができる。
 
 ## OpenAPI generatorを利用する
+
+FIXME
+
 ## 参考リンク
 
 * [OpenAPI Specification 3.0.3](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.0.3.md)
-
 
 ## 速習YAML
 
@@ -60,7 +62,6 @@ key: value
 { key: value }
 ```
 
-
 ### ◆配列
 
 配列は「"-"(ハイフン)」で表現します。「"-"(ハイフン)」1つが1要素になります。
@@ -75,7 +76,6 @@ key:
 ```json
 key: [value1, value2, ...]
 ```
-
 
 ### ◆ハッシュのネスト
 
@@ -95,7 +95,6 @@ parent_key: {
   child_key2: child_value2
 }
 ```
-
 
 ### ◆配列のネスト
 
@@ -134,7 +133,6 @@ parent_key: [{
     child_key2: child_value2
   }]
 ```
-
 
 ### ◆長文（コードのような改行付きの長い文字列を入れたい場合）
 
@@ -234,10 +232,10 @@ key2: value2
   * contact
     * 連絡先情報
     * name: "customer support"
-    * url:  https://example.com/support"
+    * url:  <https://example.com/support>
     * email: "support@example.com"
   * license
-    * ライセンス情報を定義する。[SPDX](https://spdx.org/licenses/)を参考にするとよい 
+    * ライセンス情報を定義する。[SPDX](https://spdx.org/licenses/)を参考にするとよい。
     * name "MIT License"
     * url: "https://opensource.org/licenses/MIT"
 
@@ -245,7 +243,7 @@ key2: value2
 
 `RESTAPI/openapi-servers.yaml` を参照の事
 
-```
+```txt
 servers:
   - url: "http://api.example.com/{version}" 必須。接続先URLを指定します。
     description: "pruduction environment" 接続先に関する説明
@@ -264,7 +262,6 @@ servers:
   * `RESTAPI/openapi-request-body.yaml`
   * `RESTAPI/openapi-response.yaml`
   
-
 ```yaml
 paths:
   "/users/{userId}/message":
