@@ -218,7 +218,9 @@ key2: value2
 * components:
   * OpenAPIの中で利用するさまざまなオブジェクトをコンポーネント化して再利用可能にする
 
-## メタデータ
+## メタデータ(Infoオブジェクト)
+
+`RESTAPI/openapi-kuchikomi.yaml` を参照の事
 
 * title
   * 必須 APIのタイトルを指定
@@ -238,3 +240,19 @@ key2: value2
     * ライセンス情報を定義する。[SPDX](https://spdx.org/licenses/)を参考にするとよい 
     * name "MIT License"
     * url: "https://opensource.org/licenses/MIT"
+
+## Serverオブジェクト
+
+`RESTAPI/openapi-servers.yaml` を参照の事
+
+```
+servers:
+  - url: "http://api.example.com/{version}" 必須。接続先URLを指定します。
+    description: "pruduction environment" 接続先に関する説明
+    variables: 接続先URLで指定したテンプレート変数の内容を定義(上述の`version`など)
+      version:
+        description: "API Version"
+        enum: ["v1", "v2"]
+        default: "v2"
+```
+
