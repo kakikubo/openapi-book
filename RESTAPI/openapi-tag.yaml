@@ -1,0 +1,30 @@
+openapi: "3.0.3"
+
+info:
+  title: "Show Review API"
+  version: "1.0.0"
+
+tags:
+  - name: reviews
+    description: "Show Review operation"
+
+paths:
+  "/shops/{shopId}/reviews":
+    parameters:
+      - name: shopId
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      summary: "get shop reviews"
+      description: "(description): Post Specified shop reviews"
+      tags: ["reviews"]
+      responses:
+        "200":
+          description: "Success Operation"
+    post:
+      summary: "Create Review"  
+      tags: ["reviews"]
+      responses:
+        "201":
+          description: "Success Operation"
