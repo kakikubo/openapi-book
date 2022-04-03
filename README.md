@@ -262,8 +262,8 @@ servers:
   * `RESTAPI/openapi-path.yaml`
   * `RESTAPI/openapi-post-review.yaml`
   * `RESTAPI/openapi-request-body.yaml`
+  * `RESTAPI/openapi-response.yaml`
   
-
 
 ```yaml
 paths:
@@ -284,8 +284,20 @@ paths:
         content:
           application/json: {}
       responses:
-        "201":
-          description: "Success Response"
+        "201": # 4XX 5XXという指定も可能
+          description: "Success Response" # 説明
+          headers: # レスポンスヘッダー
+            x-rate-limit-remaining:
+            description: "Number of remaining requests"
+            schema: { type: integer }
+          content: # レスポンスボディ
+            application/json:
+              schema:
+                type: object
+                properties:
+                  score: { type: integer }
+                  comment: { type: string }
+                  created: { type: string, format: date-time}
       security:
         - sample_oauth2_auth: ["create_review"]
 ```
