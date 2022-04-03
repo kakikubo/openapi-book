@@ -259,6 +259,7 @@ servers:
 ## パス(paths)
 
 `RESTAPI/openapi-path.yaml` を参照の事
+`RESTAPI/openapi-post-review.yaml` を参照の事
 
 ```yaml
 paths:
@@ -270,9 +271,11 @@ paths:
       deprecated: false
       parameters:
       - name: "userId"
-        in: "path"
+        in: "path" # query/header/path/cookie
+        description: "User Identifier"
         required: true
         schema: { type: string }
+        example: "m4v5bjhq"
       requestBody:
         content:
           application/json: {}

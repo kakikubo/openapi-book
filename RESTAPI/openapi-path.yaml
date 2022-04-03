@@ -6,9 +6,9 @@ info:
 
 paths:
   "/shops/{shopId}/reviews":
-    get:
-      summary: "Get Specified shop reviews"  
-      description: "(description): Get Specified shop reviews"
+    post:
+      summary: "Create Review"  
+      description: "(description): Post Specified shop reviews"
       tags: ["shops"]
       deprecated: false
       parameters:
@@ -16,6 +16,17 @@ paths:
           in: path
           required: true
           schema: { type: string }
+          example: "abcdefg"
+        - name: X-Api-key
+          in: header
+          description: "Request User Identifier"
+          schema: { type: string }
+          example: "XXXX-XXXX-XXXX-XXXX"
+        - name: token
+          in: cookie
+          description: "One Time Token"
+          schema: { type: string }
+          example: "XXXX-XXXX-XXXX-XXXX"
       responses:
-        "200":
+        "201":
           description: "Success Operation"
