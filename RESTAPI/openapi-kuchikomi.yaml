@@ -1,0 +1,22 @@
+openapi: "3.0.3"
+
+info:
+  title: "Show Review API"
+  description: |
+    # Features
+    - Get reviews
+    - Post review
+
+  termsOfService: "https://example.com/terms"
+  contact:
+    name: "customer support"
+    url: "https://example.com/support"
+    email: "support@example.com"
+  license:
+    name: "MIT License"
+    url: "https://opensource.org/licenses/MIT"
+  version: "1.0.0"
+
+
+paths: {}
+
