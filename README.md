@@ -398,3 +398,24 @@ tags:
   - name: "users"
   description: "User Operation"
 ```
+
+## コンポーネント
+
+2重管理を避ける為に使う。
+ルートオブジェクトの一つ。
+
+* `RESTAPI/openapi-component.yaml` を参照
+
+```yaml
+components:
+  schemas:
+    ...
+  parameters:
+    ...
+  requestBodies:
+    ...
+  responses:
+    ...
+  securitySchemas:
+    ...
+```
