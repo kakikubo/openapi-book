@@ -388,3 +388,13 @@ components:
       type: string
       enum: ["red", "blue", "yellow"] # 選択可能な値を設定
 ```
+
+## tag
+
+* `RESTAPI/openapi-tag.yaml` を参照
+
+```yaml
+tags:
+  - name: "users"
+  description: "User Operation"
+```
