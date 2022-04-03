@@ -155,7 +155,6 @@ bar`
 }
 ```
 
-
 ### ◆複数YAMLの結合（1ファイルに複数のYAMLを含めたい場合）
 
 YAMLは1ファイルに複数定義を入れることができます。複数の定義を行いたい場合、その境界は「"---"(ハイフン3つ)」で仕切ります。
@@ -170,3 +169,32 @@ key2: value2
 { key1: value1 }
 { key2: value2 }
 ```
+
+## データ型
+
+* interger 整数 format指定可能
+* number 浮動小数 format指定可能
+* string 文字列 format指定可能
+* boolean 真偽値
+* object オブジェクト
+* array 配列
+
+### format
+
+* integer
+  * int32 符号付き32ビット整数
+  * int64 符号付き64ビット整数
+* number
+  * float 浮動小数
+  * double 倍精度浮動小数
+* string
+  * (何も指定しない) 文字列
+  * byte Base64エンコードされた文字列
+  * binary バイナリ
+  * date 日付(YYYY-MM-DD形式)の文字列 RFC3339
+  * date-time 日時(YYYY-MM-DDThh:mm:ssTZD形式)の文字列 RFC3339
+  * email メールアドレスを示す文字列 RFC5322
+  * hostname ホスト名を示す文字列 RFC1123
+  * ipv4 "."ピリオドで区切られたIPV4アドレス文字列 RFC2673
+  * uri URIフォーマットに従った文字列 RFC3986
+  * uuid UUID文字列 RFC4122
