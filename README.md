@@ -302,4 +302,53 @@ paths:
         - sample_oauth2_auth: ["create_review"]
 ```
 
+## Schemaオブジェクト表現
 
+### 共通プロパティ
+
+```yaml
+components:
+  schemas:
+    type: string
+    format: email
+    description: "str" #共通: データ型の説明
+    default: "hoge"    # 共通: デフォルト値
+    nullable: true     # 共通: null許容するかどうか
+    example: "abc"     # 共通: サンプル
+    deprecated: false  # 共通: 廃止かどうか
+```
+
+### integer, number
+
+```yaml
+components:
+  schemas:
+    type: integer
+    format: int32
+    multipleOf: 10            # 指定された数の倍数になっているかどうか
+    maximum: 100              # 最大値
+    exclusiveMaximum: false   # 最大値を含まないかどうか
+                              # true: x <100, false <= 100
+    minimum: 0                # 最小値
+    exclusiveMinimum: false   # 最小値を含まないかどうか
+                              # true 0 < x, false: 0 <= x
+```
+
+### string
+
+```yaml
+components:
+  schemas:
+    type: string
+    format: email
+    minLength: 0       # 最小文字数。指定された文字数以上である事
+    maxLength: 100     # 最大文字数。指定された文字数以下である事
+```
+
+### boolean
+
+```yaml
+components:
+  schemas:
+    type: boolean # 特別な項目はない
+```
