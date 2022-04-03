@@ -1,0 +1,111 @@
+name: Release new Javascript SDK
+on:
+  pull_request:
+    paths:
+      - 'app/controllers/api/openapi/openapi.yaml'
+    types:
+      - 'opened'
+      - 'synchronize'
+    branches-ignore:
+      - 'master'
+      - 'staging'
+  push:
+    paths:
+      - 'app/controllers/api/openapi/openapi.yaml'
+    branches:
+      - 'staging'
+      - 'develop'
+env:
+  IS_MINOR: ${{ github.ref == 'refs/heads/develop' }}
+  IS_STAGING: ${{ github.ref == 'refs/heads/staging' }}
+  GIT_AUTHOR_NAME: booking-js-codegen
+  GIT_AUTHOR_EMAIL: booking-js-codegen@medpeer.co.jp
+  GIT_COMMITTER_NAME: booking-js-codegen
+  GIT_COMMITTER_EMAIL: booking-js-codegen@medpeer.co.jp
+  PR_NUMBER: ${{ github.event.number }}
+  RUN_ID: ${{ github.run_id }}
+  # PRの時 https://github.community/t/github-sha-isnt-the-value-expected/17903/2
+  COMMIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
+jobs:
+  cancel:
+    name: 'Cancel Previous Runs'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+  deploy_sdk:
+    runs-on: ubuntu-latest
+    name: booking-sdk-js
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: "dietplus-server"
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Validate SDK
+        working-directory: dietplus-server
+        run: |
+          make api/kenpoplus/pro/validate
+      - name: Generate KenpoPlusPro json schema
+        working-directory: dietplus-server
+        run: |
+          sudo yarn
+          sudo yarn generateKenpoPlusProSchema
+      - name: Build SDK
+        working-directory: dietplus-server
+        run: |
+          make api/kenpoplus/pro/generate
+      - name: install sdk dependencies
+        working-directory: dietplus-server/tmp/sdk
+        run: |
+          sudo cp -p ../../sdk-js/.npmignore ./.npmignore
+          sudo yarn install
+          sudo yarn build
+      - name: remove scripts
+        working-directory: dietplus-server/tmp/sdk
+        run: |
+          sudo sed -i 's/"prepublishOnly": "npm run build"/"test": "echo no tests"/g' ./package.json
+          cat ./package.json
+      - uses: actions/setup-node@v2
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@medpeer-dev'
+      - name: publish pr version
+        if: contains(fromJson('[ "refs/heads/staging", "refs/heads/master", "refs/heads/develop", "refs/heads/review" ]'), github.ref) == false
+        working-directory: dietplus-server/tmp/sdk
+        run: |
+          NEW_VERSION=$(npm view @medpeer-dev/dietplus-server@latest version)
+          sudo npm version $NEW_VERSION
+          sudo npm version minor
+          PRERELEASE_ID=$(echo "$PR_NUMBER"-"$COMMIT_HASH")
+          sudo npm version prerelease --preid=$PRERELEASE_ID
+          echo $NEW_VERSION
+          npm publish --tag pr
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: publish staging version
+        if: ${{ 'refs/heads/staging' == github.ref }}
+        working-directory: dietplus-server/tmp/sdk
+        run: |
+          NEW_VERSION=$(npm view @medpeer-dev/dietplus-server@latest version)
+          sudo npm version $NEW_VERSION
+          sudo npm version minor
+          PRERELEASE_ID=$(echo staging-"$COMMIT_HASH")
+          sudo npm version prerelease --preid=$PRERELEASE_ID
+          echo $NEW_VERSION
+          npm publish --tag staging
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: publish minor version
+        if: ${{ 'refs/heads/develop' == github.ref }}
+        working-directory: dietplus-server/tmp/sdk
+        run: |
+          NEW_VERSION=$(npm view @medpeer-dev/dietplus-server@latest version)
+          sudo npm version $NEW_VERSION
+          sudo npm version minor
+          echo $NEW_VERSION
+          npm publish --tag latest
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

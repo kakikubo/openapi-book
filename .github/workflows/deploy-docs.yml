@@ -1,0 +1,38 @@
+name: API仕様書のdeploy
+
+on:
+  push:
+    paths:
+      - 'app/controllers/api/openapi/openapi.yaml'
+    branches:
+      - develop
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Extract branch name
+      shell: bash
+      run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+      id: extract_branch
+    - name: generate docs
+      env:
+        BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+      run: |
+        npx redoc-cli bundle api/openapi.yaml --output docs/${BRANCH_NAME}/index.html
+    - name: publish docs
+      env:
+        BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+      run: |
+        git config user.name 'GitHub Actions Bot'
+        git config user.email '<>'
+        git add docs/${BRANCH_NAME}/index.html
+        git commit -m 'docsの更新 '
+        git checkout docs --
+        git checkout ${BRANCH_NAME} -- docs/${BRANCH_NAME}/index.html
+        git add docs/${BRANCH_NAME}/index.html
+        git commit -m "docsの更新 ${BRANCH_NAME} ${GITHUB_SHA}"
+        git push origin docs --force
