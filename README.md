@@ -198,3 +198,43 @@ key2: value2
   * ipv4 "."ピリオドで区切られたIPV4アドレス文字列 RFC2673
   * uri URIフォーマットに従った文字列 RFC3986
   * uuid UUID文字列 RFC4122
+
+## ルートオブジェクト
+
+`RESTAPI/openapi-rootobject.yaml` を参照の事
+
+* openapi: "3.0.3"
+  * 必須 OpenAPIのバージョン番号を指定する
+* info:
+  * 必須 APIのメタ情報
+* servers:
+  * APIを提供するサーバーを定義する
+* tags:
+  * APIを分類するタグを定義する
+* paths:
+  * 必須 APIとして利用可能なパスおよび操作を定義する
+* security:
+  * API全体にかかるセキュリティ要件
+* components:
+  * OpenAPIの中で利用するさまざまなオブジェクトをコンポーネント化して再利用可能にする
+
+## メタデータ
+
+* title
+  * 必須 APIのタイトルを指定
+* description
+  * 詳細説明を記載する。マークダウンで記述ができる
+* version
+  * APIドキュメントのバージョン情報
+* OpenなAPIを定義する際に必須となる項目
+  * termsOfService
+    * サービス利用規約のURL
+  * contact
+    * 連絡先情報
+    * name: "customer support"
+    * url:  https://example.com/support"
+    * email: "support@example.com"
+  * license
+    * ライセンス情報を定義する。[SPDX](https://spdx.org/licenses/)を参考にするとよい 
+    * name "MIT License"
+    * url: "https://opensource.org/licenses/MIT"
