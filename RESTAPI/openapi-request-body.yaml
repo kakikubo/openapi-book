@@ -1,0 +1,29 @@
+openapi: "3.0.3"
+
+info:
+  title: "Show Review API"
+  version: "1.0.0"
+
+paths:
+  "/shops/{shopId}/reviews":
+    post:
+      summary: "Create Specified shop reviews"  
+      description: "(description): Create Specified shop reviews"
+      parameters:
+        - name: shopId
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        description: "Content of review"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                score: { type: integer, example: 3 }
+                comment: { type: string, example: "Delicious" }
+      responses:
+        "201":
+          description: "Success Operation"

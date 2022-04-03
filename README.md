@@ -256,3 +256,138 @@ servers:
         default: "v2"
 ```
 
+## パス(paths)
+
+* 以下を参照
+  * `RESTAPI/openapi-path.yaml`
+  * `RESTAPI/openapi-post-review.yaml`
+  * `RESTAPI/openapi-request-body.yaml`
+  * `RESTAPI/openapi-response.yaml`
+  
+
+```yaml
+paths:
+  "/users/{userId}/message":
+    post:
+      summary: "Send new message."
+      description: "Send new message"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+      - name: "userId"
+        in: "path" # query/header/path/cookie
+        description: "User Identifier"
+        required: true
+        schema: { type: string }
+        example: "m4v5bjhq"
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        "201": # 4XX 5XXという指定も可能
+          description: "Success Response" # 説明
+          headers: # レスポンスヘッダー
+            x-rate-limit-remaining:
+            description: "Number of remaining requests"
+            schema: { type: integer }
+          content: # レスポンスボディ
+            application/json:
+              schema:
+                type: object
+                properties:
+                  score: { type: integer }
+                  comment: { type: string }
+                  created: { type: string, format: date-time}
+      security:
+        - sample_oauth2_auth: ["create_review"]
+```
+
+## Schemaオブジェクト表現
+
+### 共通プロパティ
+
+```yaml
+components:
+  schemas:
+    type: string
+    format: email
+    description: "str" #共通: データ型の説明
+    default: "hoge"    # 共通: デフォルト値
+    nullable: true     # 共通: null許容するかどうか
+    example: "abc"     # 共通: サンプル
+    deprecated: false  # 共通: 廃止かどうか
+```
+
+### integer, number
+
+```yaml
+components:
+  schemas:
+    type: integer
+    format: int32
+    multipleOf: 10            # 指定された数の倍数になっているかどうか
+    maximum: 100              # 最大値
+    exclusiveMaximum: false   # 最大値を含まないかどうか
+                              # true: x <100, false <= 100
+    minimum: 0                # 最小値
+    exclusiveMinimum: false   # 最小値を含まないかどうか
+                              # true 0 < x, false: 0 <= x
+```
+
+### string
+
+```yaml
+components:
+  schemas:
+    type: string
+    format: email
+    minLength: 0       # 最小文字数。指定された文字数以上である事
+    maxLength: 100     # 最大文字数。指定された文字数以下である事
+```
+
+### boolean
+
+```yaml
+components:
+  schemas:
+    type: boolean # 特別な項目はない
+```
+
+### object
+
+```yaml
+components:
+  schemas:
+    type: object
+    properties: # プロパティ定義
+      name: { type: string }
+      dob: { type: string, format: date}
+    additionalProperties: true # スキーマ以外のプロパティを許すかどうか
+    required:  # 必須プロパティの定義
+      - name
+    minProperties: 2 # 最小プロパティ数
+    maxProperties: 2 # 最大プロパティ数
+```
+
+### array
+
+```yaml
+components:
+  schemas:
+    SampleArray:
+      type: array
+      items: { type: string } # 配列内にいれられるスキーマを指定
+      minItems: 0 #最小個数
+      maxItems: 5 #最大個数
+      uniqueItems: true # 配列内での重複を許すかどうか
+```
+
+### enum
+
+```yaml
+components:
+  schemas:
+    SampleEnum:
+      type: string
+      enum: ["red", "blue", "yellow"] # 選択可能な値を設定
+```
