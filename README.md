@@ -352,3 +352,42 @@ components:
   schemas:
     type: boolean # 特別な項目はない
 ```
+
+### object
+
+```yaml
+components:
+  schemas:
+    type: object
+    properties: # プロパティ定義
+      name: { type: string }
+      dob: { type: string, format: date}
+    additionalProperties: true # スキーマ以外のプロパティを許すかどうか
+    required:  # 必須プロパティの定義
+      - name
+    minProperties: 2 # 最小プロパティ数
+    maxProperties: 2 # 最大プロパティ数
+```
+
+### array
+
+```yaml
+components:
+  schemas:
+    SampleArray:
+      type: array
+      items: { type: string } # 配列内にいれられるスキーマを指定
+      minItems: 0 #最小個数
+      maxItems: 5 #最大個数
+      uniqueItems: true # 配列内での重複を許すかどうか
+```
+
+### enum
+
+```yaml
+components:
+  schemas:
+    SampleEnum:
+      type: string
+      enum: ["red", "blue", "yellow"] # 選択可能な値を設定
+```
