@@ -258,8 +258,12 @@ servers:
 
 ## パス(paths)
 
-`RESTAPI/openapi-path.yaml` を参照の事
-`RESTAPI/openapi-post-review.yaml` を参照の事
+* 以下を参照
+  * `RESTAPI/openapi-path.yaml`
+  * `RESTAPI/openapi-post-review.yaml`
+  * `RESTAPI/openapi-request-body.yaml`
+  
+
 
 ```yaml
 paths:
@@ -285,4 +289,5 @@ paths:
       security:
         - sample_oauth2_auth: ["create_review"]
 ```
+
 
