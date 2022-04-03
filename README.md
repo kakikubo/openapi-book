@@ -256,3 +256,30 @@ servers:
         default: "v2"
 ```
 
+## パス(paths)
+
+`RESTAPI/openapi-path.yaml` を参照の事
+
+```yaml
+paths:
+  "/users/{userId}/message":
+    post:
+      summary: "Send new message."
+      description: "Send new message"
+      tags: ["users"]
+      deprecated: false
+      parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema: { type: string }
+      requestBody:
+        content:
+          application/json: {}
+      responses:
+        "201":
+          description: "Success Response"
+      security:
+        - sample_oauth2_auth: ["create_review"]
+```
+
