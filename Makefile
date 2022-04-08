@@ -13,3 +13,6 @@ up:
 
 swagger:
 	docker run -d -p 80:8080 --name editor swaggerapi/swagger-editor:v4.2.2
+
+redoc-cli:
+	npx redoc-cli bundle openapi.yaml --output docs/index.html
