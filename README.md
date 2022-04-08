@@ -261,7 +261,7 @@ servers:
   * `RESTAPI/openapi-post-review.yaml`
   * `RESTAPI/openapi-request-body.yaml`
   * `RESTAPI/openapi-response.yaml`
-  
+
 ```yaml
 paths:
   "/users/{userId}/message":
@@ -416,6 +416,102 @@ components:
     ...
   responses:
     ...
-  securitySchemas:
+  securitySchemes:
     ...
+```
+
+## セキュリティ
+
+* `RESTAPI/openapi-security.yaml` を参照
+  * Basic
+  * Bearer
+  * header
+  * cookie
+
+### 利用するスキームの定義
+
+利用するスキームは `components` に定義
+
+JWTのパターン
+
+```yaml
+components:
+  securitySchemes:
+    sample_jwt_auth: # 利用するセキュリティスキームの名称
+      description: "JWT Auth"
+      type: http # http/apiKey/oauth2/openIdConnect
+      scheme: bearer
+      bearerFormat: JWT
+```
+
+API Key
+
+```yaml
+components:
+  securitySchemes:
+    sample_apikey_auth: # 利用するセキュリティスキームの名称
+      description: "API-Key authentication."
+      type: apiKey # http/apiKey/oauth2/openIdConnect
+      in: header
+      name: X-API-Key
+```
+
+ログインセッション
+
+```yaml
+components:
+  securitySchemes:
+    sample_cookie_auth: # 利用するセキュリティスキームの名称
+      description: "Login Session authentication"
+      type: apiKey # http/apiKey/oauth2/openIdConnect
+      in: cookie
+      name: JSESSIONID
+```
+
+OAuth2.0
+
+```yaml
+components:
+  securitySchemes:
+    sample_oauth2_auth: # 利用するセキュリティスキームの名称
+      description: "OAuth2"
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://oauth.sample.com/auth"
+          tokenUrl: "https://oauth.sample.com/token"
+          scopes:
+            "create_review": "Post new review."
+      in: cookie
+      name: JSESSIONID
+```
+
+Open ID Connect
+
+```yaml
+components:
+  securitySchemes:
+    sample_oidc_auth: # 利用するセキュリティスキームの名称
+      description: "Open ID Connect"
+      type: openIdConnect
+      openIdConnectUrl: "https://oidc.sample.com/signin"
+```
+
+### APIに適用
+
+APIへ適用する方法は2種類
+
+* 個別に適用
+* 全体に適用して個別に解除
+
+```yaml
+paths:
+  "/samples":
+    get:
+      summary: "Get all sample data"
+      responses:
+        "200":
+          description: "Success"
+      security:
+      - sample_jwt_auth: []
 ```
