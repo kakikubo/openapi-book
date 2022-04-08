@@ -416,7 +416,7 @@ components:
     ...
   responses:
     ...
-  securitySchemas:
+  securitySchemes:
     ...
 ```
 
@@ -435,7 +435,7 @@ JWTのパターン
 
 ```yaml
 components:
-  securitySchemas:
+  securitySchemes:
     sample_jwt_auth: # 利用するセキュリティスキームの名称
       description: "JWT Auth"
       type: http # http/apiKey/oauth2/openIdConnect
@@ -447,7 +447,7 @@ API Key
 
 ```yaml
 components:
-  securitySchemas:
+  securitySchemes:
     sample_apikey_auth: # 利用するセキュリティスキームの名称
       description: "API-Key authentication."
       type: apiKey # http/apiKey/oauth2/openIdConnect
@@ -459,7 +459,7 @@ components:
 
 ```yaml
 components:
-  securitySchemas:
+  securitySchemes:
     sample_cookie_auth: # 利用するセキュリティスキームの名称
       description: "Login Session authentication"
       type: apiKey # http/apiKey/oauth2/openIdConnect
@@ -471,7 +471,7 @@ OAuth2.0
 
 ```yaml
 components:
-  securitySchemas:
+  securitySchemes:
     sample_oauth2_auth: # 利用するセキュリティスキームの名称
       description: "OAuth2"
       type: oauth2
@@ -489,7 +489,7 @@ Open ID Connect
 
 ```yaml
 components:
-  securitySchemas:
+  securitySchemes:
     sample_oidc_auth: # 利用するセキュリティスキームの名称
       description: "Open ID Connect"
       type: openIdConnect
