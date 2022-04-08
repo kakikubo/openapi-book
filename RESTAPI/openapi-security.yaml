@@ -16,7 +16,7 @@ info:
     url: "https://opensource.org/licenses/MIT"
   version: "1.0.0"
 
-servers: 
+servers:
   - url: "http://localhost:{port}"
     description: "Local Development"
     variables:
@@ -51,6 +51,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Review"
+      security: []
     post:
       summary: "Create new review"
       description: "Create specified shop's new review"
@@ -71,7 +72,8 @@ paths:
               schema: { type: string, format: url }
         "400":
           $ref: "#/components/responses/400-BadRequest"
-
+security:
+  - apikey_auth: []
 
 components:
   schemas:
@@ -108,5 +110,11 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/ClientError"
+  securitySchemes:
+    apikey_auth:
+      description: "API Key Authorization"
+      type: apiKey
+      in: header
+      name: "X-Api-Key"
 
 
