@@ -261,7 +261,7 @@ servers:
   * `RESTAPI/openapi-post-review.yaml`
   * `RESTAPI/openapi-request-body.yaml`
   * `RESTAPI/openapi-response.yaml`
-  
+
 ```yaml
 paths:
   "/users/{userId}/message":
@@ -422,10 +422,11 @@ components:
 
 ## セキュリティ
 
-* Basic
-* Bearer
-* header
-* cookie
+* `RESTAPI/openapi-security.yaml` を参照
+  * Basic
+  * Bearer
+  * header
+  * cookie
 
 ### 利用するスキームの定義
 
