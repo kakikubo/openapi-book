@@ -515,3 +515,17 @@ paths:
       security:
       - sample_jwt_auth: []
 ```
+
+## スタブ実行
+
+* `RESTAPI/openapi-stub.yaml` を参照
+
+1. `make swagger` でswagger editorを起動する
+2. http://localhost へアクセスする
+3. swagger editorの画面から`Generate Server`を選択する
+4. さらにその中から`nodejs-server`を選択する。
+5. ダウンロードが始まるので、そのzipを展開する。
+6. 展開したフォルダをプロジェクトルートへ配置
+7. 名前は `nodejs-server-server-generated` (これがスタブ)
+8. http://localhost:8080/docs へアクセスする
+9. `Try it out` を押して見ると、パラメータを編集しながら実際に返ってくる値など、挙動を確認する事ができる。
