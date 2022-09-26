@@ -23,7 +23,7 @@ jobs:
           cache: 'npm'
 
       - name: bundle
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: pages deploy
         uses: peaceiris/actions-gh-pages@v3
