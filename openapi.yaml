@@ -40,7 +40,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: Create a pet
+      summary: ペットを生成
       operationId: createPets
       tags:
         - pets

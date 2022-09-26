@@ -41,7 +41,9 @@ jobs:
       - name: install redoc # Redocのインストール
         run: yarn global add redoc-cli
       - name: build openAPI file # OpenAPIの定義をHTMLに変換
-        run: redoc-cli bundle ./openapi.yaml -o docs/index.html # プロジェクトのディレクトリに合わせて変更してください。
+        env:
+          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+        run: redoc-cli bundle ./openapi.yaml -o docs/${BRANCH_NAME}/index.html # プロジェクトのディレクトリに合わせて変更してください。
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
