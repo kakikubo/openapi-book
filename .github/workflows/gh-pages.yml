@@ -17,13 +17,15 @@ jobs:
         with:
           ref: main # 手動実行時のブランチを指定しておく
 
-      - uses: actions/setup-node@v2
+      - name: bundle
+        run: yarn install --frozen-lockfile
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
-
-      - name: bundle
-        run: yarn install
 
       - name: pages deploy
         uses: peaceiris/actions-gh-pages@v3
