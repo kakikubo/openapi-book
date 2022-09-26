@@ -22,10 +22,8 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      - run: npm ci
-
       - name: bundle
-        run: npm run bundle
+        run: yarn install
 
       - name: pages deploy
         uses: peaceiris/actions-gh-pages@v3
