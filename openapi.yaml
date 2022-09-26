@@ -9,7 +9,7 @@ servers:
 paths:
   /pets:
     get:
-      summary: List all pets
+      summary: 全ペットをリストする
       operationId: listPets
       tags:
         - pets
