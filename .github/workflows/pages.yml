@@ -4,7 +4,9 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["develop"]
+    branches:
+      - develop
+      - feature/pages
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,13 +32,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Extract branch name
+        shell: bash
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: extract_branch
       - name: Setup Pages
         uses: actions/configure-pages@v2
+      - name: node setting # Redocでnpmを使うのでNodeの設定
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: install redoc # Redocのインストール
+        run: yarn global add redoc-cli
+      - name: build openAPI file # OpenAPIの定義をHTMLに変換
+        env:
+          BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
+        run: redoc-cli bundle ./openapi.yaml -o docs/${BRANCH_NAME}/index.html # プロジェクトのディレクトリに合わせて変更してください。
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: '.'
+          path: './docs'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
